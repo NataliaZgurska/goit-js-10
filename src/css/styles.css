@@ -38,6 +38,18 @@ body {
   padding: 46px;
 }
 
+.main-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.main-link {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgb(56, 27, 170);
+}
+
 p {
   padding-bottom: 36px;
   margin: 0;
@@ -58,7 +70,7 @@ p {
   margin-bottom: 32px;
 }
 
-.datetime-input {
+#datetime-picker {
   width: 272px;
   height: 40px;
   color: #2e2f42;
@@ -103,10 +115,6 @@ p {
   color: #060695;
 }
 
-/* .start-btn:hover {
-  background-color: #6c8cff;
-} */
-
 .disable-btn {
   background-color: #989898;
   color: #cfcfcf;
@@ -143,18 +151,9 @@ p {
 
 /* ******************old ************/
 /* 
-.main-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
 
-.main-link {
-  font-size: 24px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: rgb(56, 27, 170);
-}
+
+
 
 .gallery {
   display: flex;

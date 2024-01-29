@@ -42,7 +42,7 @@ const options = {
             message: 'Оберіть дату в майбутньому',
             messageColor: '#FFFFFF',
             backgroundColor: '#B51B1B',
-              position: 'topRight',
+              position: 'topCenter',
                 close: true,
                timeout: 10000
         });
@@ -64,8 +64,7 @@ function onBtnStartClick(e) {
         difference -= 1000;
 
     if (difference>1000) {
-        console.log('difference: ', difference);
-        // конвертуємо ms в дні-години-хвилини-секунди і форматуємо в двозначний вигляд 
+       // конвертуємо ms в дні-години-хвилини-секунди і форматуємо в двозначний вигляд 
         const difObj = convertMs(difference);
         const difArray = Object.values(difObj).map((elem) => String(elem).padStart(2, 0));
         // виводимо дні-години-хвилини-секунди на екран
@@ -115,7 +114,7 @@ function greeting() {
          
             messageColor: '#060695',
             backgroundColor: '#ffff00',
-              position: 'topRight',
+              position: 'topCenter',
                 close: true,
                timeout: 10000
         });
