@@ -28,14 +28,14 @@ const options = {
        userSelectedDate = selectedDates[0];
       
       if (userSelectedDate > new Date()) {
-        console.log('userSelectedDate: ', userSelectedDate);
+        // console.log('userSelectedDate: ', userSelectedDate);
      
         btn.disabled = false;
         btn.classList.remove('disable-btn');
     } else {
     //   btn.setAttribute('disabled', true);
         btn.classList.add('disable-btn');
-        console.log('wrong date: ', userSelectedDate);
+        // console.log('wrong date: ', userSelectedDate);
         
           iziToast.show({
             close: true,
