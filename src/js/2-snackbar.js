@@ -33,7 +33,7 @@ function onSubmitClick(e) {
         message: `✅ Fulfilled promise in ${value} ms`,
         messageColor: '#FFFFFF',
         backgroundColor: '#59A10D',
-        position: 'topRight',
+        position: 'topCenter',
       });
     })
     .catch(value => {
@@ -41,7 +41,7 @@ function onSubmitClick(e) {
         message: `❌ Rejected promise in ${value} ms`,
         messageColor: '#FFFFFF',
         backgroundColor: '#EF4040',
-        position: 'topRight',
+        position: 'topCenter',
       });
     });
   form.reset();

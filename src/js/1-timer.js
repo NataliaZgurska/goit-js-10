@@ -15,11 +15,8 @@ let userSelectedDate;
 let difference;
 let timerIntervalId;
 
-btn.disabled = true;
-btn.style.backgroundColor = '#989898';
-inputForm.disabled = false;
-inputForm.style.color = '#000000;'; 
-inputForm.style.borderColor = 'blue';
+btnOff();
+inputOn();
 
 const options = {
   enableTime: true,
@@ -30,14 +27,9 @@ const options = {
       userSelectedDate = selectedDates[0];
       
     if (userSelectedDate > new Date()) {
-        // якщо обрана дата правильна, то кнопка стає активною
-        btn.disabled = false;
-        btn.style.backgroundColor = '#4e75ff';
+      btnOn();
     } else {
-      // якщо обрана дата неправильна, то кнопка стає неактивною + повідомлення
-        btn.disabled = true;
-        btn.style.backgroundColor = '#989898';
-              
+      btnOff();
         iziToast.show({
             close: true,
             message: 'Оберіть дату в майбутньому',
@@ -56,16 +48,9 @@ flatpickr('#datetime-picker', options);
 btn.addEventListener('click', onBtnStartClick);
 
 function onBtnStartClick(e) {
-  // зупиняєм таймер еscape-ом
-  document.addEventListener('keydown', onKeyClick); 
-  
-  // робимо кнопку і інпут неактивними
-  btn.disabled = true;
-  inputForm.disabled = true;
-  btn.style.backgroundColor = '#989898';
-  inputForm.style.color = '#808080'; 
-  inputForm.style.borderColor = '#808080';
-  
+  btnOff();
+  inputOff();
+   
   // запускаємо інтервал в 1000мс: виводимо difference на екран 
   timerIntervalId = setInterval(() => {
     difference = userSelectedDate - new Date();
@@ -105,24 +90,16 @@ function convertMs(ms) {
 function timerIntervalStop(e) {
   clearInterval(timerIntervalId);
   secondsSet.textContent = '00';
-
-  // робимо активним інтпут
-  inputForm.disabled = false;
-  inputForm.style.color = '#000000;'; 
-  inputForm.style.borderColor = 'blue';
+  inputOn();
 
   // перевірка на закінчення таймера
-  if (difference <= 1000) greeting();
-else console.log('таймер зупинено');
-}
-
-function onKeyClick(e) {
-  if (e.code === 'Escape') {
-    timerIntervalStop();
-    //    document.removeEventListener('keydown', onKeyClick); 
-
-  } 
-}
+  if (difference <= 1000) {
+    greeting();
+    console.log('цей час настав!')
+  } else {
+    console.log('таймер зупинено')
+  }
+} 
 
 function greeting() {
     iziToast.show({
@@ -134,4 +111,27 @@ function greeting() {
       close: true,
       timeout: 10000
     });
+}
+
+function btnOff() {
+  btn.disabled = true;
+  btn.style.backgroundColor = '#989898';
+  btn.style.boxShadow = '';
+}
+
+function btnOn() {
+  btn.disabled = false;
+  btn.style.backgroundColor = '#4e75ff';
+  btn.style.boxShadow = '5px 5px 18px 2px royalblue';
+}
+
+function inputOn() {
+  inputForm.disabled = false;
+  inputForm.style.borderColor = 'blue';
+  inputForm.style.color = '#000000;'; 
+}
+function inputOff() {
+  inputForm.disabled = true;
+  inputForm.style.color = '#808080'; 
+  inputForm.style.borderColor = '#808080';
 }

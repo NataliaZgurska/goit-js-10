@@ -92,6 +92,7 @@ p {
   border: none;
   background: #4e75ff;
   color: #ffffff;
+  /* box-shadow: 5px 5px 18px 2px royalblue; */
 }
 
 .timer {
