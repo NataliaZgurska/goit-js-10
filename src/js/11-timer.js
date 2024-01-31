@@ -3,7 +3,7 @@ import "flatpickr/dist/flatpickr.min.css";
 import iziToast from "izitoast";
 import 'izitoast/dist/css/iziToast.min.css';
 
-const inputForm = document.querySelector('#datetime-picker');
+
 const btn = document.querySelector('button');
 
 const daysSet = document.querySelector('span[data-days]');
@@ -16,10 +16,7 @@ let difference;
 let timerIntervalId;
 
 btn.disabled = true;
-btn.style.backgroundColor = '#989898';
-inputForm.disabled = false;
-inputForm.style.color = '#000000;'; 
-inputForm.style.borderColor = 'blue';
+btn.classList.add('disable-btn');
 
 const options = {
   enableTime: true,
@@ -27,25 +24,27 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-      userSelectedDate = selectedDates[0];
+    // console.log(selectedDates[0]);
+       userSelectedDate = selectedDates[0];
       
-    if (userSelectedDate > new Date()) {
-        // якщо обрана дата правильна, то кнопка стає активною
+      if (userSelectedDate > new Date()) {
+        // console.log('userSelectedDate: ', userSelectedDate);
+     
         btn.disabled = false;
-        btn.style.backgroundColor = '#4e75ff';
+        btn.classList.remove('disable-btn');
     } else {
-      // якщо обрана дата неправильна, то кнопка стає неактивною + повідомлення
-        btn.disabled = true;
-        btn.style.backgroundColor = '#989898';
-              
-        iziToast.show({
+    //   btn.setAttribute('disabled', true);
+        btn.classList.add('disable-btn');
+        // console.log('wrong date: ', userSelectedDate);
+        
+          iziToast.show({
             close: true,
             message: 'Оберіть дату в майбутньому',
             messageColor: '#FFFFFF',
             backgroundColor: '#B51B1B',
-            position: 'topCenter',
-            close: true,
-            timeout: 5000
+              position: 'topCenter',
+                close: true,
+               timeout: 10000
         });
     }
 },
@@ -56,20 +55,14 @@ flatpickr('#datetime-picker', options);
 btn.addEventListener('click', onBtnStartClick);
 
 function onBtnStartClick(e) {
-  // зупиняєм таймер еscape-ом
-  document.addEventListener('keydown', onKeyClick); 
-  
-  // робимо кнопку і інпут неактивними
-  btn.disabled = true;
-  inputForm.disabled = true;
-  btn.style.backgroundColor = '#989898';
-  inputForm.style.color = '#808080'; 
-  inputForm.style.borderColor = '#808080';
-  
-  // запускаємо інтервал в 1000мс: виводимо difference на екран 
-  timerIntervalId = setInterval(() => {
+    document.addEventListener('keydown', onKeyClick); 
     difference = userSelectedDate - new Date();
-      
+    console.log('click btn difference', difference);
+
+
+    timerIntervalId = setInterval(() => {
+        difference -= 1000;
+
     if (difference>1000) {
        // конвертуємо ms в дні-години-хвилини-секунди і форматуємо в двозначний вигляд 
         const difObj = convertMs(difference);
@@ -80,7 +73,10 @@ function onBtnStartClick(e) {
         minutesSet.textContent = difArray[2];
         secondsSet.textContent = difArray[3];
     } else {
-      timerIntervalStop();
+        clearInterval(timerIntervalId);
+        secondsSet.textContent = '00';
+        console.log('Цей час настав!');
+        greeting();
     }
 
  }, 1000);
@@ -102,36 +98,24 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds };
 }
 
-function timerIntervalStop(e) {
-  clearInterval(timerIntervalId);
-  secondsSet.textContent = '00';
-
-  // робимо активним інтпут
-  inputForm.disabled = false;
-  inputForm.style.color = '#000000;'; 
-  inputForm.style.borderColor = 'blue';
-
-  // перевірка на закінчення таймера
-  if (difference <= 1000) greeting();
-else console.log('таймер зупинено');
-}
-
 function onKeyClick(e) {
   if (e.code === 'Escape') {
-    timerIntervalStop();
-    //    document.removeEventListener('keydown', onKeyClick); 
-
+    clearInterval(timerIntervalId);
+      console.log('таймер зупинено');
+    //    document.addEventListener('keydown', onKeyClick); 
   } 
 }
 
 function greeting() {
     iziToast.show({
-      close: true,
-      message: 'Цей час настав!',
-      messageColor: '#060695',
-      backgroundColor: '#ffff00',
-      position: 'topCenter',
-      close: true,
-      timeout: 10000
-    });
+        
+            close: true,
+        message: 'Цей час настав!',
+         
+            messageColor: '#060695',
+            backgroundColor: '#ffff00',
+              position: 'topCenter',
+                close: true,
+               timeout: 10000
+        });
 }
